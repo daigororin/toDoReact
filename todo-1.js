@@ -7,32 +7,36 @@ export default class Todo extends Component {
       name: ''
     };
   }
-  
   onInput = (e) => {
     this.setState({
       name: e.target.value
     });
   }
-
   addTodo = () => {
     const { todos, name } = this.state;
     this.setState({
-      todos: [...todos, name]
+      todos: [...todos, name]}
+     //e.target.value = '';
+    );
+  }
+  removeTodo = (index) => {
+    const { todos, name } = this.state;
+    this.setState({
+      todos: [...todos.slice(0, index), ...todos.slice(index + 1)]
     });
   }
-
   render() {
+    //text.focus();
     const { todos } = this.state;
     return (<div>
-      <input type = "text" onInput={this.onInput} />
-      <button onClick = {this.addTodo} >entry</button>
-
+      <input type="text" onInput={this.onInput} />
+      <button onClick={this.addTodo} >entry</button>
       <ul>
-        {todos.map((todo, index) =>
-        <li key = {index}>
+        {todos.map((todo, index) => <li key={index}>
+          {todo}
+          <button onClick={() => { this.removeTodo(index) }}>delete</button>
         </li>)}
       </ul>
     </div>);
   }
-
 }
